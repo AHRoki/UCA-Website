@@ -1,0 +1,336 @@
+/* ==========================================
+   UCA PREMIUM NAVBAR
+   FINAL PRODUCTION CSS
+
+   PART 1 / 2
+
+   Navbar
+   Logo
+   Navigation
+   Theme Toggle Area
+========================================== */
+
+/* ==========================================
+   NAVBAR
+========================================== */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+
+  background: #0b1f3a;
+
+  z-index: 1000;
+
+  transition:
+    background .35s ease,
+    box-shadow .35s ease;
+}
+
+/* Scroll Effect */
+
+.navbar-scrolled {
+  background: rgba(11, 31, 58, 0.95);
+
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* ==========================================
+   CONTAINER
+========================================== */
+
+.navbar .container {
+  width: min(1200px, 92%);
+
+  height: 76px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+/* ==========================================
+   LOGO
+========================================== */
+.logo {
+  color: #d4af37;
+
+  text-decoration: none;
+
+  font-size: 1.8rem;
+  font-weight: 700;
+
+  letter-spacing: .8px;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  transition:
+    color .25s ease,
+    transform .25s ease;
+}
+
+.logo:hover {
+  color: #f4d76a;
+
+  transform: scale(1.03);
+}
+/* ==========================================
+   NAVIGATION
+========================================== */
+
+nav {
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+}
+
+.nav-links {
+  display: flex;
+
+  align-items: center;
+
+  gap: 30px;
+
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  list-style: none;
+}
+
+.nav-links a {
+  position: relative;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: .96rem;
+  font-weight: 500;
+
+  transition:
+    color .25s ease;
+}
+
+/* Underline Animation */
+
+.nav-links a::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -6px;
+
+  width: 0;
+  height: 2px;
+
+  background: #d4af37;
+
+  transition:
+    width .3s ease;
+}
+
+.nav-links a:hover {
+  color: #d4af37;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ==========================================
+   RIGHT SIDE
+========================================== */
+
+.navbar-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+/* ==========================================
+   MENU TOGGLE
+========================================== */
+
+.menu-toggle {
+  display: none;
+
+
+  color: #ffffff;
+
+  font-size: 1.8rem;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  transition:
+    color .25s ease,
+    transform .25s ease;
+}
+
+.menu-toggle:hover {
+  color: #d4af37;
+
+  transform: scale(1.08);
+}
+
+/* ==========================================
+   END PART 1 / 2
+========================================== */
+/* ==========================================
+   UCA PREMIUM NAVBAR
+   FINAL PRODUCTION CSS
+
+   PART 2 / 2
+
+   Mobile
+   Theme Support
+   Responsive
+   Final Polish
+========================================== */
+
+/* ==========================================
+   MOBILE RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+
+  .navbar .container {
+    height: 72px;
+  }
+
+  nav {
+    flex: initial;
+  }
+
+  .menu-toggle {
+    display: block;
+    font-size: 2rem;
+  }
+
+  .nav-links {
+    display: none;
+
+    position: absolute;
+
+    top: 72px;
+    left: 0;
+
+    width: 100%;
+
+    background: #0b1f3a;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 0;
+
+    padding: 20px 0;
+
+    box-shadow:
+      0 12px 30px rgba(0,0,0,.20);
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links li {
+    width: 100%;
+
+    text-align: center;
+  }
+
+  .nav-links a {
+    display: block;
+
+    padding: 14px 20px;
+  }
+
+  .nav-links a::after {
+    display: none;
+  }
+
+  .navbar-right {
+    gap: 10px;
+  }
+
+}
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .menu-toggle {
+    font-size: 1.8rem;
+  }
+
+}
+
+/* ==========================================
+   DARK MODE
+========================================== */
+
+[data-theme="dark"] .navbar {
+  background: #0f172a;
+}
+
+[data-theme="dark"] .navbar-scrolled {
+  background: rgba(15,23,42,.96);
+}
+
+[data-theme="dark"] .nav-links a {
+  color: #f3f4f6;
+}
+
+[data-theme="dark"] .nav-links a:hover {
+  color: #d4af37;
+}
+
+[data-theme="dark"] .logo {
+  color: #d4af37;
+}
+
+/* ==========================================
+   ACCESSIBILITY
+========================================== */
+
+.logo:focus-visible,
+.menu-toggle:focus-visible,
+.nav-links a:focus-visible {
+  outline: 2px solid #d4af37;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ==========================================
+   END OF FILE
+
+   UCA PREMIUM NAVBAR
+   FINAL PRODUCTION CSS
+========================================== */

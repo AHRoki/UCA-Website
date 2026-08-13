@@ -1,0 +1,1138 @@
+/* ==========================================
+   UCA LIGHTBOX
+
+   FINAL PRODUCTION CSS
+
+   PART 1 / 2
+
+   Overlay
+   Container
+   Image System
+   Close Button
+   Animation
+========================================== */
+
+
+/* ==========================================
+   LIGHTBOX OVERLAY
+========================================== */
+
+
+.lightbox-overlay {
+
+
+  position:
+
+    fixed;
+
+
+
+  inset:
+
+    0;
+
+
+
+  display:
+
+    flex;
+
+
+
+  align-items:
+
+    center;
+
+
+
+  justify-content:
+
+    center;
+
+
+
+  padding:
+
+    30px;
+
+
+
+  background:
+
+
+    rgba(
+      0,
+      0,
+      0,
+      .85
+    );
+
+
+
+  backdrop-filter:
+
+    blur(12px);
+
+
+
+  z-index:
+
+    10000;
+
+
+
+  animation:
+
+    lightboxFade .35s ease;
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   LIGHTBOX CONTAINER
+========================================== */
+
+
+.lightbox-container {
+
+
+  position:
+
+    relative;
+
+
+
+  width:
+
+    min(
+      1200px,
+      100%
+    );
+
+
+
+  max-height:
+
+    90vh;
+
+
+
+  display:
+
+    flex;
+
+
+
+  align-items:
+
+    center;
+
+
+
+  justify-content:
+
+    center;
+
+
+
+  overflow:
+
+    hidden;
+
+
+
+  border-radius:
+
+    20px;
+
+
+
+  animation:
+
+    lightboxZoom .35s ease;
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   LIGHTBOX IMAGE
+========================================== */
+
+
+.lightbox-image {
+
+
+  display:
+
+    block;
+
+
+
+  max-width:
+
+    100%;
+
+
+
+  max-height:
+
+    85vh;
+
+
+
+  object-fit:
+
+    contain;
+
+
+
+  border-radius:
+
+    18px;
+
+
+
+  cursor:
+
+    zoom-out;
+
+
+
+  animation:
+
+    imageAppear .4s ease;
+
+
+
+  box-shadow:
+
+
+    0 30px 80px
+    rgba(
+      0,
+      0,
+      0,
+      .45
+    );
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   CLOSE BUTTON
+========================================== */
+
+
+.lightbox-close {
+
+
+  position:
+
+    absolute;
+
+
+
+  top:
+
+    18px;
+
+
+
+  right:
+
+    18px;
+
+
+
+  width:
+
+    48px;
+
+
+
+  height:
+
+    48px;
+
+
+
+  display:
+
+    flex;
+
+
+
+  align-items:
+
+    center;
+
+
+
+  justify-content:
+
+    center;
+
+
+
+  border:
+
+    none;
+
+
+
+  border-radius:
+
+    50%;
+
+
+
+  background:
+
+
+    rgba(
+      255,
+      255,
+      255,
+      .18
+    );
+
+
+
+  backdrop-filter:
+
+    blur(10px);
+
+
+
+  color:
+
+    #ffffff;
+
+
+
+  font-size:
+
+    1.5rem;
+
+
+
+  font-weight:
+
+    700;
+
+
+
+  cursor:
+
+    pointer;
+
+
+
+  z-index:
+
+    20;
+
+
+
+  transition:
+
+
+    background .25s ease,
+    transform .25s ease,
+    box-shadow .25s ease;
+
+
+}
+
+
+
+
+
+
+.lightbox-close:hover {
+
+
+  background:
+
+    var(--primary-color);
+
+
+
+  transform:
+
+
+    rotate(90deg)
+    scale(1.08);
+
+
+
+  box-shadow:
+
+
+    0 12px 30px
+    rgba(
+      0,
+      0,
+      0,
+      .35
+    );
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+
+@keyframes lightboxFade {
+
+
+  from {
+
+
+    opacity:
+
+      0;
+
+
+  }
+
+
+  to {
+
+
+    opacity:
+
+      1;
+
+
+  }
+
+
+}
+
+
+
+
+
+
+@keyframes lightboxZoom {
+
+
+  from {
+
+
+    opacity:
+
+      0;
+
+
+
+    transform:
+
+
+      scale(.92);
+
+
+
+  }
+
+
+  to {
+
+
+    opacity:
+
+      1;
+
+
+
+    transform:
+
+
+      scale(1);
+
+
+
+  }
+
+
+}
+
+
+
+
+
+
+@keyframes imageAppear {
+
+
+  from {
+
+
+    opacity:
+
+      0;
+
+
+
+    transform:
+
+
+      scale(.96);
+
+
+
+  }
+
+
+  to {
+
+
+    opacity:
+
+      1;
+
+
+
+    transform:
+
+
+      scale(1);
+
+
+
+  }
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   MOBILE RESPONSIVE
+========================================== */
+
+
+@media (max-width:768px) {
+
+
+
+  .lightbox-overlay {
+
+
+    padding:
+
+      16px;
+
+
+  }
+
+
+
+
+
+  .lightbox-container {
+
+
+    width:
+
+      100%;
+
+
+
+    border-radius:
+
+      14px;
+
+
+  }
+
+
+
+
+
+  .lightbox-image {
+
+
+    max-height:
+
+      75vh;
+
+
+
+    border-radius:
+
+      14px;
+
+
+  }
+
+
+
+
+
+  .lightbox-close {
+
+
+    width:
+
+      42px;
+
+
+
+    height:
+
+      42px;
+
+
+
+    top:
+
+      12px;
+
+
+
+    right:
+
+      12px;
+
+
+
+    font-size:
+
+      1.2rem;
+
+
+  }
+
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   END PART 1 / 2
+========================================== */
+/* ==========================================
+   UCA LIGHTBOX
+
+   FINAL PRODUCTION CSS
+
+   PART 2 / 2
+
+   Navigation Buttons
+   Counter
+   Hover Effects
+   Dark Mode
+   Accessibility
+   Final Polish
+========================================== */
+
+
+/* ==========================================
+   NAVIGATION AREA
+========================================== */
+
+
+.lightbox-navigation {
+
+
+  position:
+
+    absolute;
+
+
+
+  inset:
+
+    0;
+
+
+
+  display:
+
+    flex;
+
+
+
+  align-items:
+
+    center;
+
+
+
+  justify-content:
+
+    space-between;
+
+
+
+  padding:
+
+    0 20px;
+
+
+
+  pointer-events:
+
+    none;
+
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   NAVIGATION BUTTON
+========================================== */
+
+
+.lightbox-nav-btn {
+
+
+  width:
+
+    54px;
+
+
+
+  height:
+
+    54px;
+
+
+
+  display:
+
+    flex;
+
+
+
+  align-items:
+
+    center;
+
+
+
+  justify-content:
+
+    center;
+
+
+
+  border:
+
+    none;
+
+
+
+  border-radius:
+
+    50%;
+
+
+
+  background:
+
+
+    rgba(
+      255,
+      255,
+      255,
+      .18
+    );
+
+
+
+  backdrop-filter:
+
+    blur(12px);
+
+
+
+  color:
+
+    #ffffff;
+
+
+
+  font-size:
+
+    1.4rem;
+
+
+
+  cursor:
+
+    pointer;
+
+
+
+  pointer-events:
+
+    auto;
+
+
+
+  transition:
+
+
+    background .25s ease,
+    transform .25s ease,
+    box-shadow .25s ease;
+
+
+}
+
+
+
+
+
+
+.lightbox-nav-btn:hover {
+
+
+  background:
+
+    var(--primary-color);
+
+
+
+  transform:
+
+    scale(1.10);
+
+
+
+  box-shadow:
+
+
+    0 15px 35px
+    rgba(
+      0,
+      0,
+      0,
+      .35
+    );
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   IMAGE COUNTER
+========================================== */
+
+
+.lightbox-counter {
+
+
+  position:
+
+    absolute;
+
+
+
+  bottom:
+
+    22px;
+
+
+
+  left:
+
+    50%;
+
+
+
+  transform:
+
+    translateX(-50%);
+
+
+
+  padding:
+
+
+    8px 18px;
+
+
+
+  border-radius:
+
+    999px;
+
+
+
+  background:
+
+
+    rgba(
+      0,
+      0,
+      0,
+      .45
+    );
+
+
+
+  backdrop-filter:
+
+    blur(10px);
+
+
+
+  color:
+
+    #ffffff;
+
+
+
+  font-size:
+
+    .9rem;
+
+
+
+  font-weight:
+
+    600;
+
+
+
+  letter-spacing:
+
+    .5px;
+
+
+
+  z-index:
+
+    15;
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   BUTTON FOCUS ACCESSIBILITY
+========================================== */
+
+
+.lightbox button:focus-visible {
+
+
+  outline:
+
+    3px solid
+    var(--primary-color);
+
+
+
+  outline-offset:
+
+    3px;
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   DARK MODE SUPPORT
+========================================== */
+
+
+[data-theme="dark"] 
+.lightbox-overlay {
+
+
+  background:
+
+
+    rgba(
+      0,
+      0,
+      0,
+      .90
+    );
+
+
+}
+
+
+
+
+
+
+[data-theme="dark"] 
+.lightbox-nav-btn:hover,
+[data-theme="dark"] 
+.lightbox-close:hover {
+
+
+  background:
+
+    var(--primary-color);
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+
+@media (max-width:480px) {
+
+
+
+  .lightbox-navigation {
+
+
+    padding:
+
+      0 10px;
+
+
+  }
+
+
+
+
+
+  .lightbox-nav-btn {
+
+
+    width:
+
+      42px;
+
+
+
+    height:
+
+      42px;
+
+
+
+    font-size:
+
+      1.1rem;
+
+
+  }
+
+
+
+
+
+  .lightbox-counter {
+
+
+    bottom:
+
+      14px;
+
+
+
+    padding:
+
+
+      7px 14px;
+
+
+
+    font-size:
+
+      .82rem;
+
+
+  }
+
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   PERFORMANCE OPTIMIZATION
+========================================== */
+
+
+.lightbox-image,
+.lightbox-nav-btn,
+.lightbox-close {
+
+
+  will-change:
+
+    transform;
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+   FINAL END
+
+   UCA LIGHTBOX CSS
+   PRODUCTION VERSION
+========================================== */

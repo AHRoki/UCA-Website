@@ -1,0 +1,11 @@
+# Query: .jpg
+
+4 results - 2 files
+
+uca-mini-website\src\components\home\Hero.css:
+  21:     url("/images/hero-bg.webp");
+
+uca-mini-website\src\data\testimonials.js:
+   6:     image: "/images/testimonials/client1.webp",
+  14:     image: "/images/testimonials/client2.webp",
+  22:     image: "/images/testimonials/client3.webp",

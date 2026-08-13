@@ -1,0 +1,124 @@
+.team {
+  padding: 80px 20px;
+  background: #f8f9fc;
+}
+
+.team .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 15px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  will-change: transform;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.team-image {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.team-card:hover .team-image {
+  transform: scale(1.05);
+}
+
+.team-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 25px;
+}
+
+.team-content h3 {
+  color: #0b1f3a;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.team-content p {
+  color: #d4af37;
+  font-weight: 600;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.team-social {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.team-social a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #0b1f3a;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.team-social a:hover {
+  background: #d4af37;
+  color: #0b1f3a;
+  transform: translateY(-2px);
+}
+
+.team-social a:focus-visible {
+  outline: 3px solid #d4af37;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-card,
+  .team-image,
+  .team-social a {
+    transition: none;
+  }
+
+  .team-card:hover,
+  .team-social a:hover,
+  .team-card:hover .team-image {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .team {
+    padding: 60px 15px;
+  }
+
+  .team-image {
+    height: 300px;
+  }
+}

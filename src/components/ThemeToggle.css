@@ -1,0 +1,94 @@
+/* ==========================================
+   UCA THEME TOGGLE
+   FINAL PRODUCTION CSS
+========================================== */
+
+/* Toggle Button */
+
+.theme-toggle {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+
+  color: var(--heading-color);
+
+  transition:
+    all 0.3s ease;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Hover */
+
+.theme-toggle:hover {
+  transform: translateY(-2px) scale(1.05);
+
+  background: var(--primary-color);
+
+  color: #ffffff;
+
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.20);
+}
+
+/* Icon */
+
+.theme-toggle-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+
+  transition:
+    transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* Focus */
+
+.theme-toggle:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 3px;
+}
+
+/* Dark Theme */
+
+[data-theme="dark"] .theme-toggle {
+  background: #1f2937;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  background: var(--primary-color);
+  color: #111827;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    width: 44px;
+    height: 44px;
+  }
+
+  .theme-toggle-icon {
+    font-size: 1.1rem;
+  }
+}
+
+/* ==========================================
+   END OF FILE
+========================================== */
