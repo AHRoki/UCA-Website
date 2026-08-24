@@ -1,56 +1,133 @@
 import { useMemo, useState } from "react";
 import "./FeaturedProjects.css";
-import projects from "../../data/projects-old";
+import projects from "../../data/projects";
 import ProjectCard from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
 
 function FeaturedProjects() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [currentIndex, setCurrentIndex] = useState(null);
+  const [selectedCategory, setSelectedCategory] =
+    useState("All");
 
-  // Categories
-  const categories = [
-    "All",
-    ...new Set(projects.map((project) => project.category)),
-  ];
+  const [selectedProjectId, setSelectedProjectId] =
+    useState(null);
 
-  // Filtered Projects
+  // ==========================================
+  // CATEGORIES
+  // ==========================================
+
+  const categories = useMemo(() => {
+    return [
+      "All",
+      ...new Set(
+        projects.map(
+          (project) => project.category
+        )
+      ),
+    ];
+  }, []);
+
+  // ==========================================
+  // FILTERED PROJECTS
+  // ==========================================
+
   const filteredProjects = useMemo(() => {
     if (selectedCategory === "All") {
       return projects;
     }
 
     return projects.filter(
-      (project) => project.category === selectedCategory
+      (project) =>
+        project.category === selectedCategory
     );
   }, [selectedCategory]);
 
-  // Open Modal
+  // ==========================================
+  // CURRENT PROJECT INDEX
+  // ==========================================
+
+  const currentIndex =
+    filteredProjects.findIndex(
+      (project) =>
+        project.id === selectedProjectId
+    );
+
+  // ==========================================
+  // CURRENT PROJECT
+  // ==========================================
+
+  const currentProject =
+    currentIndex !== -1
+      ? filteredProjects[currentIndex]
+      : null;
+
+  // ==========================================
+  // OPEN PROJECT
+  // ==========================================
+
   const openProject = (project) => {
-    const index = filteredProjects.findIndex(
-      (item) => item.id === project.id
-    );
-
-    setCurrentIndex(index);
+    setSelectedProjectId(project.id);
   };
 
-  // Close Modal
+  // ==========================================
+  // CLOSE PROJECT
+  // ==========================================
+
   const closeProject = () => {
-    setCurrentIndex(null);
+    setSelectedProjectId(null);
   };
 
-  // Previous Project
+  // ==========================================
+  // PREVIOUS PROJECT
+  // ==========================================
+
   const prevProject = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? filteredProjects.length - 1 : prev - 1
+    if (
+      filteredProjects.length <= 1 ||
+      currentIndex === -1
+    ) {
+      return;
+    }
+
+    const previousIndex =
+      currentIndex === 0
+        ? filteredProjects.length - 1
+        : currentIndex - 1;
+
+    setSelectedProjectId(
+      filteredProjects[previousIndex].id
     );
   };
 
-  // Next Project
+  // ==========================================
+  // NEXT PROJECT
+  // ==========================================
+
   const nextProject = () => {
-    setCurrentIndex((prev) =>
-      prev === filteredProjects.length - 1 ? 0 : prev + 1
+    if (
+      filteredProjects.length <= 1 ||
+      currentIndex === -1
+    ) {
+      return;
+    }
+
+    const nextIndex =
+      currentIndex ===
+      filteredProjects.length - 1
+        ? 0
+        : currentIndex + 1;
+
+    setSelectedProjectId(
+      filteredProjects[nextIndex].id
     );
+  };
+
+  // ==========================================
+  // CATEGORY CHANGE
+  // ==========================================
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setSelectedProjectId(null);
   };
 
   return (
@@ -59,6 +136,10 @@ function FeaturedProjects() {
       id="projects"
     >
       <div className="container">
+
+        {/* ======================================
+            SECTION TITLE
+        ====================================== */}
 
         <div
           className="section-title"
@@ -73,7 +154,9 @@ function FeaturedProjects() {
           </p>
         </div>
 
-        {/* Filter Buttons */}
+        {/* ======================================
+            PROJECT FILTER
+        ====================================== */}
 
         <div
           className="project-filter"
@@ -81,23 +164,28 @@ function FeaturedProjects() {
         >
           {categories.map((category) => (
             <button
+              type="button"
               key={category}
               className={
                 selectedCategory === category
                   ? "active"
                   : ""
               }
-              onClick={() => {
-                setSelectedCategory(category);
-                setCurrentIndex(null);
-              }}
+              aria-pressed={
+                selectedCategory === category
+              }
+              onClick={() =>
+                handleCategoryChange(category)
+              }
             >
               {category}
             </button>
           ))}
         </div>
 
-        {/* Project Grid */}
+        {/* ======================================
+            PROJECT GRID
+        ====================================== */}
 
         <div className="projects-grid">
           {filteredProjects.map((project) => (
@@ -108,20 +196,20 @@ function FeaturedProjects() {
             />
           ))}
         </div>
-
       </div>
 
+      {/* ========================================
+          PROJECT MODAL
+      ======================================== */}
+
       <ProjectModal
-        project={
-          currentIndex !== null
-            ? filteredProjects[currentIndex]
-            : null
-        }
-        isOpen={currentIndex !== null}
-        onClose={closeProject}
-        onPrev={prevProject}
-        onNext={nextProject}
-      />
+  project={currentProject}
+  isOpen={currentProject !== null}
+  onClose={closeProject}
+  onPrev={prevProject}
+  onNext={nextProject}
+  canNavigateProjects={filteredProjects.length > 1}
+/>
     </section>
   );
 }

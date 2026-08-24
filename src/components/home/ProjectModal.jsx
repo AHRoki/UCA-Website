@@ -1,6 +1,7 @@
-
 import "./ProjectModal.css";
+
 import { useEffect, useMemo, useState } from "react";
+
 import Lightbox from "./Lightbox";
 
 function ProjectModal({
@@ -9,67 +10,148 @@ function ProjectModal({
   onClose,
   onPrev,
   onNext,
+  canNavigateProjects = false,
 }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
 
-  const images = useMemo(() => {
-    if (!project) return [];
+  // ==========================================
+  // PROJECT IMAGES
+  // ==========================================
 
-    if (
-      Array.isArray(project.images) &&
-      project.images.length > 0
-    ) {
+  const images = useMemo(() => {
+    if (!project) {
+      return [];
+    }
+
+    if (Array.isArray(project.images) && project.images.length > 0) {
       return project.images;
     }
 
-    return project.image ? [project.image] : [];
+    if (project.image) {
+      return [project.image];
+    }
+
+    return [];
   }, [project]);
 
+  // ==========================================
+  // LOCK BODY SCROLL
+  // ==========================================
+
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
 
     document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
   }, [isOpen]);
 
+  // ==========================================
+  // RESET IMAGE WHEN PROJECT CHANGES
+  // ==========================================
+
   useEffect(() => {
-    if (!isOpen) return;
+    setCurrentImage(0);
+    setLightboxOpen(false);
+  }, [project?.id]);
+
+  // ==========================================
+  // PREVIOUS IMAGE
+  // ==========================================
+
+  const previousImage = () => {
+    if (images.length <= 1) {
+      return;
+    }
+
+    setCurrentImage((previous) => {
+      return previous === 0
+        ? images.length - 1
+        : previous - 1;
+    });
+  };
+
+  // ==========================================
+  // NEXT IMAGE
+  // ==========================================
+
+  const nextImage = () => {
+    if (images.length <= 1) {
+      return;
+    }
+
+    setCurrentImage((previous) => {
+      return previous === images.length - 1
+        ? 0
+        : previous + 1;
+    });
+  };
+
+  // ==========================================
+  // PREVIOUS PROJECT
+  // ==========================================
+
+  const handlePreviousProject = () => {
+    if (!canNavigateProjects || !onPrev) {
+      return;
+    }
+
+    onPrev();
+  };
+
+  // ==========================================
+  // NEXT PROJECT
+  // ==========================================
+
+  const handleNextProject = () => {
+    if (!canNavigateProjects || !onNext) {
+      return;
+    }
+
+    onNext();
+  };
+
+  // ==========================================
+  // KEYBOARD NAVIGATION
+  // ==========================================
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
 
     const handleKeyDown = (event) => {
-      switch (event.key) {
-        case "Escape":
-          if (lightboxOpen) {
-            setLightboxOpen(false);
-          } else {
-            onClose();
-          }
-          break;
+      if (lightboxOpen) {
+        if (event.key === "Escape") {
+          setLightboxOpen(false);
+        }
 
-        case "ArrowLeft":
-          if (!lightboxOpen) {
-            onPrev();
-          }
-          break;
+        return;
+      }
 
-        case "ArrowRight":
-          if (!lightboxOpen) {
-            onNext();
-          }
-          break;
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
 
-        default:
-          break;
+      if (event.key === "ArrowLeft") {
+        previousImage();
+        return;
+      }
+
+      if (event.key === "ArrowRight") {
+        nextImage();
       }
     };
 
-    document.addEventListener(
-      "keydown",
-      handleKeyDown
-    );
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.removeEventListener(
@@ -80,39 +162,46 @@ function ProjectModal({
   }, [
     isOpen,
     lightboxOpen,
-    onClose,
-    onPrev,
-    onNext,
+    images.length,
   ]);
 
-  useEffect(() => {
-    setCurrentImage(0);
-    setLightboxOpen(false);
-  }, [project]);
+  // ==========================================
+  // CLOSE MODAL
+  // ==========================================
 
   if (!isOpen || !project) {
     return null;
   }
+
+  // ==========================================
+  // CURRENT IMAGE
+  // ==========================================
+
+  const currentImageSrc = images[currentImage];
+
+  // ==========================================
+  // RENDER
+  // ==========================================
+
   return (
     <>
       <div
-  className={`project-modal-overlay ${
-    isOpen ? "open" : ""
-  }`}
-  onClick={onClose}
->
+        className="project-modal-overlay open"
+        onClick={onClose}
+      >
         <div
           className="project-modal"
-          onClick={(e) => e.stopPropagation()}
+          onClick={(event) => event.stopPropagation()}
         >
-
-          {/* ===============================
-              Hero Section
-          ============================== */}
+          {/* ====================================
+              IMAGE SECTION
+          ==================================== */}
 
           <div className="project-modal-image-wrapper">
+            {/* CLOSE BUTTON */}
 
             <button
+              type="button"
               className="project-modal-close"
               onClick={onClose}
               aria-label="Close Project"
@@ -120,68 +209,120 @@ function ProjectModal({
               ✕
             </button>
 
-            <img
-              src={images[currentImage]}
-              alt={project.title}
-              className="project-modal-image"
-              onClick={() => setLightboxOpen(true)}
-            />
+            {/* MAIN IMAGE */}
+
+            {currentImageSrc && (
+              <img
+                key={`${project.id}-${currentImage}-${currentImageSrc}`}
+                src={currentImageSrc}
+                alt={`${project.title} ${currentImage + 1}`}
+                className="project-modal-image"
+                onClick={() => setLightboxOpen(true)}
+                onLoad={() => {
+                  console.log(
+                    "IMAGE LOADED:",
+                    currentImage + 1,
+                    currentImageSrc
+                  );
+                }}
+                onError={() => {
+                  console.error(
+                    "IMAGE FAILED:",
+                    currentImage + 1,
+                    currentImageSrc
+                  );
+                }}
+              />
+            )}
+
+            {/* IMAGE NAVIGATION */}
 
             {images.length > 1 && (
               <>
                 <button
+                  type="button"
                   className="project-nav-btn project-nav-left"
-                  onClick={() =>
-                    setCurrentImage((prev) =>
-                      prev === 0
-                        ? images.length - 1
-                        : prev - 1
-                    )
-                  }
+                  onClick={previousImage}
                   aria-label="Previous Image"
                 >
                   ❮
                 </button>
 
                 <button
+                  type="button"
                   className="project-nav-btn project-nav-right"
-                  onClick={() =>
-                    setCurrentImage((prev) =>
-                      prev === images.length - 1
-                        ? 0
-                        : prev + 1
-                    )
-                  }
+                  onClick={nextImage}
                   aria-label="Next Image"
                 >
                   ❯
                 </button>
 
-                <div className="project-image-counter">
+                <div
+                  className="project-image-counter"
+                  aria-live="polite"
+                >
                   {currentImage + 1} / {images.length}
                 </div>
               </>
             )}
           </div>
 
-          {/* ===============================
-              Content Section
-          ============================== */}
+          {/* ======================================
+              CONTENT SECTION
+          ====================================== */}
 
           <div className="project-modal-content">
             <div className="project-modal-details">
+              {/* CATEGORY */}
 
               <span className="project-category">
                 {project.category}
               </span>
 
+              {/* TITLE */}
+
               <h2 className="project-title">
                 {project.title}
               </h2>
 
+              {/* SUBTITLE */}
+
+              {project.subtitle && (
+                <p className="project-subtitle">
+                  {project.subtitle}
+                </p>
+              )}
+
+              {/* DESCRIPTION */}
+
               <p className="project-description">
                 {project.description}
               </p>
+
+              {/* FEATURES */}
+
+              {project.features?.length > 0 && (
+                <>
+                  <h3 className="project-section-title">
+                    Key Features
+                  </h3>
+
+                  <div className="project-tech-list">
+                    {project.features.map(
+                      (item, index) => (
+                        <span
+                          key={`feature-${index}`}
+                          className="project-tech-item"
+                        >
+                          {item}
+                        </span>
+                      )
+                    )}
+                  </div>
+                </>
+              )}
+
+              {/* TECHNOLOGIES */}
 
               {project.tech?.length > 0 && (
                 <>
@@ -190,66 +331,81 @@ function ProjectModal({
                   </h3>
 
                   <div className="project-tech-list">
-                    {project.tech.map((item, index) => (
-                      <span
-                        key={index}
-                        className="project-tech-item"
-                      >
-                        {item}
-                      </span>
-                    ))}
+                    {project.tech.map(
+                      (item, index) => (
+                        <span
+                          key={`tech-${index}`}
+                          className="project-tech-item"
+                        >
+                          {item}
+                        </span>
+                      )
+                    )}
                   </div>
                 </>
               )}
 
+              {/* ACTION BUTTONS */}
+
               <div className="project-action-buttons">
+                {project.live && (
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-btn primary"
+                  >
+                    Live Demo
+                  </a>
+                )}
 
-                <a
-                  href={project.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-btn primary"
-                >
-                  Live Demo
-                </a>
-
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-btn secondary"
-                >
-                  GitHub
-                </a>
-
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-btn secondary"
+                  >
+                    GitHub
+                  </a>
+                )}
               </div>
-
             </div>
-
           </div>
 
-          <div className="project-modal-navigation">
+          {/* ======================================
+              PROJECT NAVIGATION
+          ====================================== */}
 
-            <button
-              className="project-nav-btn"
-              onClick={onPrev}
-            >
-              ← Previous
-            </button>
+          {canNavigateProjects && (
+            <div className="project-modal-navigation">
+              <button
+                type="button"
+                className="project-modal-project-nav"
+                onClick={handlePreviousProject}
+                aria-label="Previous Project"
+              >
+                ← Previous Project
+              </button>
 
-            <button
-              className="project-nav-btn"
-              onClick={onNext}
-            >
-              Next →
-            </button>
-
-          </div>
-
+              <button
+                type="button"
+                className="project-modal-project-nav"
+                onClick={handleNextProject}
+                aria-label="Next Project"
+              >
+                Next Project →
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
-      {lightboxOpen && (
+      {/* ========================================
+          LIGHTBOX
+      ======================================== */}
+
+      {lightboxOpen && images.length > 0 && (
         <Lightbox
           images={images}
           currentImage={currentImage}
