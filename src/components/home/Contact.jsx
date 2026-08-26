@@ -305,7 +305,7 @@ function Contact() {
                   </h3>
 
                   <p>
-                    +880 1XXXXXXXXX
+                    +880 1767-917722
                   </p>
                 </div>
               </div>
@@ -324,7 +324,7 @@ function Contact() {
                   </h3>
 
                   <p>
-                    info@uca.com
+                    anwarrki66@gmail.com
                   </p>
                 </div>
               </div>
@@ -343,7 +343,7 @@ function Contact() {
                   </h3>
 
                   <p>
-                    www.uca.com
+                    uca-website-one.vercel.app
                   </p>
                 </div>
               </div>
