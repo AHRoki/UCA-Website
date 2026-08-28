@@ -1,7 +1,7 @@
 import "./WhatsAppButton.css";
 
 function WhatsAppButton() {
-  const phone = "8801700000000"; // আপনার WhatsApp নম্বর দিন
+  const phone = "8801767917722"; // UCA WhatsApp নম্বর
 
   return (
     <a
