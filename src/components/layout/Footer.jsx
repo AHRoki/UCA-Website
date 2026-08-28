@@ -1,3 +1,4 @@
+```jsx
 import "./Footer.css";
 
 function Footer() {
@@ -30,8 +31,8 @@ function Footer() {
           <h3>Contact</h3>
 
           <p>📍 Dhaka, Bangladesh</p>
-          <p>📞 +880 1XXXXXXXXX</p>
-          <p>📧 info@uca.com</p>
+          <p>📞 +880 1767-917722</p>
+          <p>📧 anwarrki66@gmail.com</p>
         </div>
 
       </div>
@@ -46,3 +47,4 @@ function Footer() {
 }
 
 export default Footer;
+```
